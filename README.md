@@ -63,7 +63,7 @@ $ npm run test:cov
 | POST | /users | - | "username": "username",<br>"password": "password",<br>"retypedPassword": "password",<br>"firstName": "userfirstName",<br>"lastName": "userlastName",<br>"email": "test@test.com" | User register |
 | POST | /auth/login | - | "username": "username",<br>"password": "password" | User login |
 | GET | /auth/profile | Yes | - | Get current user profile |
-| PUT | /events-attendance/:eventId | Yes | answer": userId | User mark attendance for a specific event with  ID |
+| PUT | /events-attendance/:eventId | Yes | "answer": userId | User mark attendance for a specific event with  ID |
 | GET | /events-attendance/:eventId | Yes | - | Users attendance status for a specific event with ID |
 | GET | /events-attendance | Yes | - | User attendance status for all events |
 | POST | /events | Yes | "name": "Event Name",<br>"description": "About Event", <br>"address": "Event Location",<br>"when":"2024-12-31 21:00:00" | Create a new event |
