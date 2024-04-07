@@ -9,20 +9,20 @@ Project is using npm as package manager, but you can use yarn as well.
 $ npm install
 ```
 
-##### 2. Run Docker Containers for host the MySQL DB and create DB with name example: "nest-events"
+##### 2. Run Docker Containers for host the MySQL DB and create DB with name example: "nest-events" (for test DB "nest-events-e2e")
 
 ```bash
 $ docker-compose up
 ```
 
-##### 3. Create .env.dev file:
+##### 3. Create .env.dev files (.env.e2e for test):
 
 ```bash
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=example
-DB_NAME=nest-events
+DB_NAME=current-db-name
 DB_DROP_SCHEMA=0
 
 APP_URL=mywebsite.com
