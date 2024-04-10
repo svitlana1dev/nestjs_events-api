@@ -24,6 +24,7 @@ DB_USER=root
 DB_PASSWORD=example
 DB_NAME=current-db-name
 DB_DROP_SCHEMA=0
+PORT=3000
 
 APP_URL=mywebsite.com
 SUPPORT_EMAIL=support@${APP_URL}

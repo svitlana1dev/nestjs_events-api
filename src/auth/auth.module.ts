@@ -11,6 +11,7 @@ import { AuthResolver } from './auth.resolver';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
 import { UserDoesNotExistConstraint } from './validation/user-does-not-exist.constraint';
+import { registerConfig } from './config/registerConfig';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { UserDoesNotExistConstraint } from './validation/user-does-not-exist.con
       useFactory: () => ({
         secret: process.env.AUTH_SECRET,
         signOptions: {
-          expiresIn: '60m',
+          expiresIn: registerConfig.tokenExpiresIn,
         },
       }),
     }),

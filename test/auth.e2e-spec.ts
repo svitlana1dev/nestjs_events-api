@@ -1,4 +1,4 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { HttpStatus, INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { Connection } from 'typeorm';
@@ -50,7 +50,7 @@ describe('Auth (e2e)', () => {
         username: 'e2e-test',
         password: 'password',
       })
-      .expect(201)
+      .expect(HttpStatus.CREATED)
       .then((response) => {
         expect(response.body.userId).toBe(1);
         expect(response.body.token).toBeDefined();
@@ -61,7 +61,7 @@ describe('Auth (e2e)', () => {
         request(app.getHttpServer())
           .get('/auth/profile')
           .set('Authorization', `Bearer ${response.body.token}`)
-          .expect(200);
+          .expect(HttpStatus.OK);
       });
   });
 
@@ -83,7 +83,7 @@ describe('Auth (e2e)', () => {
     return request(app.getHttpServer())
       .get('/auth/profile')
       .set('Authorization', `Bearer ${tokenForUser()}`)
-      .expect(200)
+      .expect(HttpStatus.OK)
       .then((response) => {
         expect(response.body.id).toBe(1);
         expect(response.body.username).toBeDefined();
@@ -103,7 +103,7 @@ describe('Auth (e2e)', () => {
     return request(app.getHttpServer())
       .get('/auth/profile')
       .set('Authorization', `Bearer ${tokenForUser()}`)
-      .expect(200)
+      .expect(HttpStatus.OK)
       .then((response) => {
         expect(response.body.password).toBeUndefined();
       });
