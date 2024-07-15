@@ -8,6 +8,9 @@ on:
 jobs:
   checkout:
     runs-on: [self-hosted, dev]
+    defaults:
+      run: 
+        working-directory: ./dev/
 
     strategy:
       matrix:
