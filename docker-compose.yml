@@ -12,6 +12,7 @@ services:
     ports:
       - 3306:3306
     volumes:
+      - ./init:/docker-entrypoint-initdb.d
       - ./mysql-data:/var/lib/mysql/data
     command: [--ignore-db-dir=lost+found]
       
