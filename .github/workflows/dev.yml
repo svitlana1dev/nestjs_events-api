@@ -22,7 +22,7 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build --if-present
-      - run: pm2 restart dist/main --update-env
+        run: pm2 restart dist\main.js --update-env
         env:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
