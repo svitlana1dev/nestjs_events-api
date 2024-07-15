@@ -10,16 +10,10 @@ services:
       MYSQL_PASSWORD: dev
       MYSQL_ROOT_PASSWORD: dev
     ports:
-      - 3306:3306
-    volumes:
-      - ./mysql-data:/var/lib/mysql/data
-    command: [--ignore-db-dir=lost+found]
-      
+      - 3306:3306     
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
-volumes:
-    mysql-data:
