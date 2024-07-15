@@ -11,9 +11,15 @@ services:
       MYSQL_ROOT_PASSWORD: dev
     ports:
       - 3306:3306
+    command: sh -c "chown -R 1001:root /label-studio/data && label-studio start
+    volumes:
+      - ./mysql-data:/var/lib/mysql/data
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+volumes:
+    mysql-data:
+      
