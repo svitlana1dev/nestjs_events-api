@@ -7,7 +7,7 @@ on:
 
 jobs:
   checkout:
-    runs-on: [self-hsoted, dev]
+    runs-on: [self-hosted, dev]
 
     strategy:
       matrix:
