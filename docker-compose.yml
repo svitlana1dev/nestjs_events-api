@@ -13,6 +13,8 @@ services:
       - 3306:3306
     volumes:
       - ./mysql-data:/var/lib/mysql/data
+    command: [--ignore-db-dir=lost+found]
+      
 
   adminer:
     image: adminer
