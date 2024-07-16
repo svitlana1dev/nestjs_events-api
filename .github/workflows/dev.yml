@@ -8,6 +8,7 @@ on:
 jobs:
   checkout:
     runs-on: [self-hosted, dev]
+    environment: dev
 
     strategy:
       matrix:
@@ -57,12 +58,6 @@ jobs:
         run: npm install -g pm2
 
       - name: Start or Restart PM2 Process
-        run: |
-          if pm2 describe main > /dev/null; then
-            pm2 restart main --update-env
-          else
-            pm2 start dist/main.js --name main
-          fi
         env:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
@@ -73,3 +68,9 @@ jobs:
           DB_HOST: ${{ vars.DB_HOST }}
           DB_PORT: ${{ vars.DB_PORT }}
           SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+        run: |
+          if pm2 describe main > /dev/null; then
+            pm2 restart main --update-env
+          else
+            pm2 start dist/main.js --name main
+          fi
