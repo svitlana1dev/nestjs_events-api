@@ -10,10 +10,20 @@ services:
       MYSQL_PASSWORD: dev
       MYSQL_ROOT_PASSWORD: dev
     ports:
-      - 3306:3306     
+      - 3306:3306
+    networks:
+      - my_network
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    depends_on:
+      - mysql
+    networks:
+      - my_network
+
+  networks:
+    my_network:
+      driver: bridge
