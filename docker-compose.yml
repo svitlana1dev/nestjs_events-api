@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:8.0.23
     restart: always
+    command: --init-file ./init.sql
     environment:
       MYSQL_DATABASE: nest-events
       MYSQL_USER: dev
