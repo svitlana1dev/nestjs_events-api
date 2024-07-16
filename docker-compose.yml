@@ -4,7 +4,6 @@ services:
   mysql:
     image: mysql:8.0.23
     restart: always
-    command: --init-file ./init.sql
     environment:
       MYSQL_DATABASE: nest-events
       MYSQL_USER: dev
@@ -12,8 +11,6 @@ services:
       MYSQL_ROOT_PASSWORD: dev
     ports:
       - 3306:3306
-    # networks:
-    #   - my_network
 
   adminer:
     image: adminer
@@ -22,9 +19,3 @@ services:
       - 8080:8080
     depends_on:
       - mysql
-    # networks:
-    #   - my_network
-
-  # networks:
-  #   my_network:
-  #     driver: bridge
