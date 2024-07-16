@@ -23,19 +23,19 @@ jobs:
           cache: 'npm'
       - run: npm ci
 
-      name: create env file
-      run: |
-        touch .env
-        echo ENGINE_API_KEY=${{ secrets.ENGINE_API_KEY }} >> .env
-        echo DB_USER=${{ secrets.DB_USER }} >> .env
-        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
-        echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
-        echo DB_NAME=${{ secrets.DB_NAME }} >> .env
-        echo APP_URL=${{ vars.APP_URL }} >> .env
-        echo DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }} >> .env
-        echo DB_HOST=${{ vars.DB_HOST }} >> .env
-        echo DB_PORT=${{ vars.DB_PORT }} >> .env
-        echo SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }} >> .env
+      - name: create env file
+        run: |
+          touch .env
+          echo ENGINE_API_KEY=${{ secrets.ENGINE_API_KEY }} >> .env
+          echo DB_USER=${{ secrets.DB_USER }} >> .env
+          echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+          echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
+          echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+          echo APP_URL=${{ vars.APP_URL }} >> .env
+          echo DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }} >> .env
+          echo DB_HOST=${{ vars.DB_HOST }} >> .env
+          echo DB_PORT=${{ vars.DB_PORT }} >> .env
+          echo SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }} >> .env
 
       # - name: Create env file
       #   uses: SpicyPizza/create-envfile@v2.0.3
