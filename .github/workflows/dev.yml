@@ -36,6 +36,17 @@ jobs:
           file_name: .env
       - name: Docker Compose up
         run: docker-compose up -d
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          APP_URL: ${{ vars.APP_URL }}
+          DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+
       - run: npm run build --if-present
       - name: Restart
         run: pm2 restart ./dist/main.js --update-env
