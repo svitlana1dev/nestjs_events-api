@@ -19,5 +19,42 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build --if-present
-      - run: pm2 restart dist/main.js
+
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_APP_URL: ${{ vars.APP_URL }}
+          envkey_DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          envkey_DB_HOST: ${{ vars.DB_HOST }}
+          envkey_DB_PORT: ${{ vars.DB_PORT }}
+          envkey_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+          file_name: .env
+      # - name: Docker Compose up
+      #   run: docker compose up -d
+      # - run: npm run build --if-present
+      # - name: Restart
+      #   run: pm2 restart dist/main.js --update-env
+      # - name: Install PM2
+      #   run: npm install -g pm2
+
+      # - name: Start or Restart PM2 Process
+      #   run: |
+      #     if pm2 describe main > /dev/null; then
+      #       pm2 restart main --update-env
+      #     else
+      #       pm2 start dist/main.js --name main
+      #     fi
+      # env:
+      #   DB_USER: ${{ secrets.DB_USER }}
+      #   DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      #   AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      #   DB_NAME: ${{ secrets.DB_NAME }}
+      #   APP_URL: ${{ vars.APP_URL }}
+      #   DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+      #   DB_HOST: ${{ vars.DB_HOST }}
+      #   DB_PORT: ${{ vars.DB_PORT }}
+      #   SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}

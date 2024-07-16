@@ -21,6 +21,19 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_APP_URL: ${{ vars.APP_URL }}
+          envkey_DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          envkey_DB_HOST: ${{ vars.DB_HOST }}
+          envkey_DB_PORT: ${{ vars.DB_PORT }}
+          envkey_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+          file_name: .env
       - name: Docker Compose up
         run: docker compose up -d
       - run: npm run build --if-present
@@ -35,12 +48,10 @@ jobs:
             pm2 restart main --update-env
           else
             pm2 start dist/main.js --name main
-          fi  
+          fi
         env:
-          DB_USER: dev
-          DB_PASSWORD: dev
-          # DB_USER: ${{ secrets.DB_USER }}
-          # DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           DB_NAME: ${{ secrets.DB_NAME }}
           APP_URL: ${{ vars.APP_URL }}
