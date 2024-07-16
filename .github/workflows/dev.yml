@@ -22,21 +22,36 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - name: Create env file
-        uses: SpicyPizza/create-envfile@v2.0.3
-        with:
-          envkey_1: DB_USER=${{ secrets.DB_USER }}
-          envkey_2: DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-          envkey_3: AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-          envkey_4: DB_NAME=${{ secrets.DB_NAME }}
-          envkey_5: APP_URL=${{ vars.APP_URL }}
-          envkey_6: DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }}
-          envkey_7: DB_HOST=${{ vars.DB_HOST }}
-          envkey_8: DB_PORT=${{ vars.DB_PORT }}
-          envkey_9: SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }}
-          file_name: .env
-          fail_on_empty: false
-          sort_keys: false
+
+      name: create env file
+      run: |
+        touch .env
+        echo ENGINE_API_KEY=${{ secrets.ENGINE_API_KEY }} >> .env
+        echo DB_USER=${{ secrets.DB_USER }} >> .env
+        echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+        echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
+        echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+        echo APP_URL=${{ vars.APP_URL }} >> .env
+        echo DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }} >> .env
+        echo DB_HOST=${{ vars.DB_HOST }} >> .env
+        echo DB_PORT=${{ vars.DB_PORT }} >> .env
+        echo SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }} >> .env
+
+      # - name: Create env file
+      #   uses: SpicyPizza/create-envfile@v2.0.3
+      #   with:
+      #     envkey_1: DB_USER=${{ secrets.DB_USER }}
+      #     envkey_2: DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+      #     envkey_3: AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+      #     envkey_4: DB_NAME=${{ secrets.DB_NAME }}
+      #     envkey_5: APP_URL=${{ vars.APP_URL }}
+      #     envkey_6: DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }}
+      #     envkey_7: DB_HOST=${{ vars.DB_HOST }}
+      #     envkey_8: DB_PORT=${{ vars.DB_PORT }}
+      #     envkey_9: SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }}
+      #     file_name: .env
+      #     fail_on_empty: false
+      #     sort_keys: false
 
       - name: Docker Compose up
         run: docker-compose up -d
