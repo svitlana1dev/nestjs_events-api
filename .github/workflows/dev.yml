@@ -37,9 +37,9 @@ jobs:
           echo DB_PORT=${{ vars.DB_PORT }} >> .env
           echo SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }} >> .env
 
-       - name: Create env file
-         uses: SpicyPizza/create-envfile@v2.0.3
-         with:
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
           envkey_1: DB_USER=${{ secrets.DB_USER }}
           envkey_2: DB_PASSWORD=${{ secrets.DB_PASSWORD }}
           envkey_3: AUTH_SECRET=${{ secrets.AUTH_SECRET }}
