@@ -12,7 +12,7 @@ export default registerAs(
   'orm.config',
   (): TypeOrmModuleOptions => ({
     type: 'mysql',
-    host: test(),
+    host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
@@ -22,12 +22,3 @@ export default registerAs(
     dropSchema: Boolean(parseInt(process.env.DB_DROP_SCHEMA)),
   }),
 );
-
-const test = () => {
-  console.log(process.env.DB_HOST);
-  console.log(process.env.DB_PORT);
-  console.log(process.env.DB_USER);
-  console.log(process.env.DB_PASSWORD);
-  console.log(process.env.DB_NAME);
-  return process.env.DB_HOST;
-};
