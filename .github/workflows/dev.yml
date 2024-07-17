@@ -8,6 +8,7 @@ on:
 jobs:
   checkout:
     runs-on: [self-hosted, dev]
+    environment: dev
 
     strategy:
       matrix:
@@ -21,5 +22,71 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build
-      - run: pm2 restart dist/main.js
+
+      # - name: create env file
+      #   run: |
+      #     touch .env
+      #     echo ENGINE_API_KEY=${{ secrets.ENGINE_API_KEY }} >> .env
+      #     echo DB_USER=${{ secrets.DB_USER }} >> .env
+      #     echo DB_PASSWORD=${{ secrets.DB_PASSWORD }} >> .env
+      #     echo AUTH_SECRET=${{ secrets.AUTH_SECRET }} >> .env
+      #     echo DB_NAME=${{ secrets.DB_NAME }} >> .env
+      #     echo APP_URL=${{ vars.APP_URL }} >> .env
+      #     echo DB_DROP_SCHEMA=${{ vars.DB_DROP_SCHEMA }} >> .env
+      #     echo DB_HOST=${{ vars.DB_HOST }} >> .env
+      #     echo DB_PORT=${{ vars.DB_PORT }} >> .env
+      #     echo SUPPORT_EMAIL=${{ vars.SUPPORT_EMAIL }} >> .env
+
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_APP_URL: ${{ vars.APP_URL }}
+          envkey_DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          envkey_DB_HOST: ${{ vars.DB_HOST }}
+          envkey_DB_PORT: ${{ vars.DB_PORT }}
+          envkey_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+          file_name: .env
+          fail_on_empty: false
+          sort_keys: false
+          directory: ./
+
+      - name: Docker Compose up
+        run: docker-compose up -d
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          APP_URL: ${{ vars.APP_URL }}
+          DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+
+      - run: npm run build --if-present
+      - name: Restart
+        run: pm2 restart ./dist/main.js --update-env
+      - name: Install PM2
+        run: npm install -g pm2
+
+      - name: Start or Restart PM2 Process
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          APP_URL: ${{ vars.APP_URL }}
+          DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+        run: |
+          if pm2 describe main > /dev/null; then
+            pm2 restart main --update-env
+          else
+            pm2 start dist/main.js --name main
+          fi

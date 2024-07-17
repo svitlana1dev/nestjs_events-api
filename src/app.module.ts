@@ -50,7 +50,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
     {
       provide: 'MESSAGE',
       inject: [AppDummy],
-      useFactory: (app) => `${app.dummy()} Factory!`,
+      useFactory: (app) => `${app.dummy()} Factory! Test`,
     },
     AppDummy,
   ],

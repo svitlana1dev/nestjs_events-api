@@ -6,6 +6,7 @@ on:
 jobs:
   checkout:
     runs-on: [self-hosted, prod]
+    environment: prod
 
     strategy:
       matrix:
@@ -19,5 +20,17 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
       - run: npm ci
-      - run: npm run build --if-present
-      - run: pm2 restart dist/main.js
+
+      - name: Create env file
+        uses: SpicyPizza/create-envfile@v2.0.3
+        with:
+          envkey_DB_USER: ${{ secrets.DB_USER }}
+          envkey_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          envkey_AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          envkey_DB_NAME: ${{ secrets.DB_NAME }}
+          envkey_APP_URL: ${{ vars.APP_URL }}
+          envkey_DB_DROP_SCHEMA: ${{ vars.DB_DROP_SCHEMA }}
+          envkey_DB_HOST: ${{ vars.DB_HOST }}
+          envkey_DB_PORT: ${{ vars.DB_PORT }}
+          envkey_SUPPORT_EMAIL: ${{ vars.SUPPORT_EMAIL }}
+          file_name: .env
