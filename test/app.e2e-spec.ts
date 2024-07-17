@@ -20,7 +20,7 @@ describe('AppController (e2e)', () => {
       .get('/')
       .expect(HttpStatus.OK)
       .expect(
-        'こんにちは世界! from Nest Events Backend!, dummy Factory! Test2',
+        'こんにちは世界! from Nest Events Backend!, dummy Factory! Hello from dev',
       );
   });
 });
