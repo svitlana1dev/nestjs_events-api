@@ -19,6 +19,8 @@ describe('AppController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/')
       .expect(HttpStatus.OK)
-      .expect('こんにちは世界! from Nest Events Backend!, dummy Factory! Test');
+      .expect(
+        'こんにちは世界! from Nest Events Backend!, dummy Factory! Test2',
+      );
   });
 });
