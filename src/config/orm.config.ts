@@ -7,7 +7,7 @@ import { Event } from './../events/event.entity';
 import { Subject } from './../school/subject.entity';
 import { Teacher } from './../school/teacher.entity';
 import { Course } from './../school/course.entity';
-console.log(process.env);
+
 export default registerAs(
   'orm.config',
   (): TypeOrmModuleOptions => ({
